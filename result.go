@@ -2,7 +2,6 @@ package syrup
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 	"waffle"
 )
@@ -17,7 +16,7 @@ func NewStdoutResultWriter(fields []string) *StdoutResultWriter {
 	}
 }
 
-func (rw *StdoutResultWriter) WriteResults(w *waffle.Worker) os.Error {
+func (rw *StdoutResultWriter) WriteResults(w *waffle.Worker) error {
 	for _, p := range w.Partitions() {
 		for _, v := range p.Vertices() {
 			s := reflect.ValueOf(v).Elem()

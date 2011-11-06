@@ -17,22 +17,26 @@ func FlagsParse() {
 	flag.StringVar(&Host, "host", "127.0.0.1", "node address")
 	flag.Uint64Var(&MinWorkers, "minWorkers", 2, "min workers")
 	flag.Uint64Var(&PartitionsPerWorker, "ppw", 1, "partitions per worker")
-	flag.Int64Var(&MessageThreshold, "mthresh", 50, "message threshold")
-	flag.Int64Var(&VertexThreshold, "vthresh", 50, "vertex threshold")
+	flag.Int64Var(&MessageThreshold, "mthresh", 1000, "message threshold")
+	flag.Int64Var(&VertexThreshold, "vthresh", 1000, "vertex threshold")
 
 	flag.Parse()
 }
 
-func CreateWorker() *waffle.Worker {
+func CreateWorker(s waffle.WorkerRpcServer, c waffle.WorkerRpcClient) *waffle.Worker {
 	w := waffle.NewWorker(Host, Port)
 	w.Config.MessageThreshold = MessageThreshold
 	w.Config.VertexThreshold = VertexThreshold
+	w.SetRpcServer(s)
+	w.SetRpcClient(c)
 	return w
 }
 
-func CreateMaster() *waffle.Master {
+func CreateMaster(s waffle.MasterRpcServer, c waffle.MasterRpcClient) *waffle.Master {
 	m := waffle.NewMaster(Host, Port)
 	m.Config.MinWorkers = MinWorkers
 	m.Config.PartitionsPerWorker = PartitionsPerWorker
+	m.SetRpcServer(s)
+	m.SetRpcClient(c)
 	return m
 }
