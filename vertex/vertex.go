@@ -13,10 +13,3 @@ func (v *SyrupVertex) SendMessageToAllNeighbors(m waffle.Msg) {
 		v.SendMessageTo(e.Target(), m)
 	}
 }
-
-type StreamVertex struct {
-	waffle.VertexBase
-}
-
-func (v *StreamVertex) Compute(msg []waffle.Msg) {
-}
