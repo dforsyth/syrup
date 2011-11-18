@@ -20,15 +20,15 @@ type File interface {
 }
 
 type LocalEnv struct {
-	pathname string
+	basepath string
 }
 
-func NewLocalEnv(pathname string) *LocalEnv {
+func NewLocalEnv(basepath string) *LocalEnv {
 	return &LocalEnv{pathname: pathname}
 }
 
 func (e *LocalEnv) OpenFile(pathname string) (File, error) {
-	return os.OpenFile(path.Join(e.pathname, pathname), os.O_CREATE | os.O_RDWR, 0666)
+	return os.OpenFile(path.Join(e.basepath, pathname), os.O_CREATE | os.O_RDWR, 0666)
 }
 
 /*
