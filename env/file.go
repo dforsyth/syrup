@@ -24,7 +24,7 @@ type LocalEnv struct {
 }
 
 func NewLocalEnv(basepath string) *LocalEnv {
-	return &LocalEnv{pathname: pathname}
+	return &LocalEnv{basepath: basepath}
 }
 
 func (e *LocalEnv) OpenFile(pathname string) (File, error) {
